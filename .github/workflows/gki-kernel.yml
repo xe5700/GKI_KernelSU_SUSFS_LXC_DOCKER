@@ -507,7 +507,7 @@ jobs:
             echo "CONFIG_CGROUP_FREEZER=y" >> ./common/arch/arm64/configs/gki_defconfig
             
             echo "添加容器和命名空间相关配置成功"
-            cd "$CONFIG/common"
+            cd "common"
             echo "更改为配置目录: $CONFIG/common..."
             git apply -v ../LXC-PATCH/patches/android12-5.10/*.patch
             echo "应用LXC补丁成功"
