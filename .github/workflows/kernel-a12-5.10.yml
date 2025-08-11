@@ -103,5 +103,5 @@ jobs:
       use_zram: ${{ inputs.use_zram }}
       use_kpm: ${{ inputs.use_kpm }}
       supp_op: ${{ inputs.supp_op || false }}
-      use_a12_510_lxc: ${{ inputs.use_lxc }}
+      use_lxc: ${{ inputs.use_lxc }}
 

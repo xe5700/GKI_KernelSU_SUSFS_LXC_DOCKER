@@ -50,6 +50,11 @@ on:
         required: true
         type: boolean
         default: true
+      use_lxc:
+        description: '是否开启容器功能?'
+        required: true
+        type: boolean
+        default: true
 jobs:
   build-kernel-a12-5-10:
     uses: ./.github/workflows/kernel-a12-5.10.yml
@@ -62,6 +67,7 @@ jobs:
       version: ${{ inputs.version }}
       use_zram: ${{ inputs.use_zram }}
       use_kpm: ${{ inputs.use_kpm }}
+      use_lxc: ${{ inputs.use_lxc }}
   get-ksu-manager:
     if: ${{ inputs.get_manager }}
     uses: ./.github/workflows/get-manager.yml
