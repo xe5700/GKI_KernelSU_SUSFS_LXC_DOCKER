@@ -36,7 +36,11 @@ on:
         required: true
         type: boolean
         default: true
-  
+      use_a12_510_lxc:
+        description: '是否开启容器功能?'
+        required: true
+        type: boolean
+        default: true
 jobs:
   build-kernel-a12-5-10-kernelsu-susfs:
     strategy:
@@ -99,4 +103,5 @@ jobs:
       use_zram: ${{ inputs.use_zram }}
       use_kpm: ${{ inputs.use_kpm }}
       supp_op: ${{ inputs.supp_op || false }}
+      use_a12_510_lxc: ${{ inputs.use_a12_510_lxc }}
 
