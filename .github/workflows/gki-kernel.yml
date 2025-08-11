@@ -156,7 +156,6 @@ jobs:
           git clone https://github.com/WildPlusKernel/kernel_patches.git
           # Sukisu的补丁仓库
           git clone https://github.com/ShirkNeko/SukiSU_patch.git
-          
       - name: 设置 CONFIG 环境变量
         run: |
           # Set CONFIG dynamically based on inputs values
@@ -484,7 +483,31 @@ jobs:
           
           # Remove check_defconfig
           sed -i 's/check_defconfig//' ./common/build.config.gki
-
+      - name: 配置容器补丁
+        if: ${{ inputs.use_lxc }}
+        run: |
+          if [ "${{ inputs.android_version }}" = "android12" ] && [ "${{ inputs.kernel_version }}" = "5.10" ]; then
+            cd "$CONFIG"
+            echo "更改为配置目录: $CONFIG..."
+            git clone https://github.com/TapetalArray/gki-custom  LXC-PATCH
+            echo "克隆LXC补丁仓库成功"
+            # 添加容器和命名空间相关配置
+            cat >> ./common/arch/arm64/configs/gki_defconfig << EOF
+            CONFIG_SYSVIPC=y
+            CONFIG_UTS_NS=y
+            CONFIG_PID_NS=y
+            CONFIG_IPC_NS=y
+            CONFIG_USER_NS=y
+            CONFIG_NET_NS=y
+            CONFIG_CGROUP_DEVICE=y
+            CONFIG_CGROUP_FREEZER=y
+            EOF
+            echo "添加容器和命名空间相关配置成功"
+            cd "$CONFIG/common"
+            echo "更改为配置目录: $CONFIG/common..."
+            git apply -v ../LXC-PATCH/patches/android12-5.10/*.patch
+            echo "应用LXC补丁成功"
+          fi
       - name: 配置内核名称
         run: |
           echo "更改为配置目录: $CONFIG..."
