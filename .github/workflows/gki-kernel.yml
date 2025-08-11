@@ -494,6 +494,8 @@ jobs:
             cd "$CONFIG"
             echo "更改为配置目录: $CONFIG..."
             git clone https://github.com/1orz/android-gki-custom.git  LXC-PATCH
+            echo "忽略module.c补丁"
+            rm LXC-PATCH/patches/android12-5.10/Ignore_symbols_crc_check.patch
             echo "克隆LXC补丁仓库成功"
             
             # 逐行添加容器和命名空间相关配置
