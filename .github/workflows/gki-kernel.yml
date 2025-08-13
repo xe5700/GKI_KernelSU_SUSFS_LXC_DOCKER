@@ -487,6 +487,10 @@ jobs:
           
           # Remove check_defconfig
           sed -i 's/check_defconfig//' ./common/build.config.gki
+      - name: Checkout code to project folder
+        uses: actions/checkout@v4
+        with:
+          path: 'project'
       - name: 配置容器补丁
         if: ${{ inputs.use_lxc }}
         run: |
@@ -506,7 +510,11 @@ jobs:
             cd "common"
             echo "更改为配置目录: $CONFIG/common..."
             git apply -v ../LXC-PATCH/patches/android12-5.10/*.patch
+            # git apply -v ../../project/0001-Ignore-symbols-crc-check.patch
             echo "应用LXC补丁成功"
+            cd ".."
+            ../project/force_lxc_patch.sh
+
           fi
       - name: 配置内核名称
         run: |
