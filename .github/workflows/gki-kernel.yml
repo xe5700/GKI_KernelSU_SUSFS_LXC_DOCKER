@@ -504,16 +504,19 @@ jobs:
             
             # 逐行添加容器和命名空间相关配置
             wget https://github.com/wu17481748/lxc-docker/releases/download/lxc-docker-2config/LXC-DOCKER-OPEN-CONFIG.sh
-            chmod 777 LXC-DOCKER-OPEN-CONFIG.sh
-            ./LXC-DOCKER-OPEN-CONFIG.sh ./common/arch/arm64/configs/gki_defconfig -w
-            echo "添加容器和命名空间相关配置成功"
+            # chmod 777 LXC-DOCKER-OPEN-CONFIG.sh
+            # ./LXC-DOCKER-OPEN-CONFIG.sh ./common/arch/arm64/configs/gki_defconfig -w
+            # echo "添加容器和命名空间相关配置成功"
+            ../project/LXC-DOCKER-OPEN-CONFIG.sh ./common/arch/arm64/configs/gki_defconfig -w
             cd "common"
             echo "更改为配置目录: $CONFIG/common..."
             git apply -v ../LXC-PATCH/patches/android12-5.10/*.patch
+            # patch ./arch/arm64/configs/gki_defconfig <  ../LXC-PATCH/docker-config.diff
+            echo "添加容器和命名空间相关配置成功"
             # git apply -v ../../project/0001-Ignore-symbols-crc-check.patch
             echo "应用LXC补丁成功"
-            cd ".."
-            ../project/force_lxc_patch.sh
+            #cd ".."
+            # ../project/force_lxc_patch.sh
 
           fi
       - name: 配置内核名称
